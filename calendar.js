@@ -165,6 +165,11 @@
         return OS.call(obj) === '[object String]';
     }
 
+
+    function getClass(el) {
+        return el.getAttribute('class') || el.getAttribute('className');
+    }
+
     // extension methods
 
     String.prototype.repeat = function (data) {
@@ -176,9 +181,9 @@
 
     String.prototype.toDate = function () {
         var dt = new Date(),
-            dot = this.replace(/\d/g, '')[0],
+            dot = this.replace(/\d/g, '').charAt(0),
             arr = this.split(dot);
-        
+
         dt.setFullYear(arr[0]);
         dt.setMonth(arr[1] - 1);
         dt.setDate(arr[2]);
@@ -275,7 +280,7 @@
         this.height = this.options.height;
         this.date = this.options.date;
         this.selectedRang = this.options.selectedRang;
-        this.data = this.options.data;
+        this.data = this.options.data;   
         this.init();
     }
 
@@ -302,6 +307,7 @@
 
                 for(var i = 0, len = data.length; i < len; i++ ) {
                     var item = data[i];
+                    
                     if ( day.isSame( item.date.toDate() ) ) {
                         ret = item.value;
                     }
@@ -318,19 +324,20 @@
                     h: this.height / 7,
                     value: d 
                 },
-                markData, $item;
+                markData, 
+                $item;
 
             var selected = dt.isSame(y, m, d) ? SELECT_CLASS : '';
             if(f === 1) {
-                data.class = OLD_DAY_CLASS;
+                data['class'] = OLD_DAY_CLASS;
             } else if (f === 3) {
-                data.class = NEW_DAY_CLASS;
+                data['class'] = NEW_DAY_CLASS;
             } else {
-                data.class = '';
+                data['class'] = '';
             }
 
             if(dt.isSame(y, m, d)) {
-                data.class += ' ' + TODAY_CLASS;
+                data['class'] += ' ' + TODAY_CLASS;
             }
 
             data.action = this.getDayAction(idt);
@@ -527,7 +534,7 @@
             this.$element.removeClass(VIEW_CLASS.date + ' ' + VIEW_CLASS.month)
                 .addClass(VIEW_CLASS[view]);
 
-            this.viewChange(view);
+            this.options.viewChange(view);
         },
         updateDateView: function (y, m, dirc, cb) {
             m = m || this.date.getMonth() + 1;
@@ -665,15 +672,15 @@
             // arrow
             _this.$element.on('click', ARROW_DATE, function() {
                 var arr = _this.getDisDateValue(),
-                    type = this.getAttribute('class'),
+                    type = getClass(this),
                     y = arr[0],
                     m = arr[1];
-
+                
                 _this.updateDateView(y, m, type);
             }).on('click', ARROW_MONTH, function() {
                 
                 var y = Number(_this.$disMonth.html()),
-                    type = this.getAttribute('class');
+                    type = getClass(this);
 
                 y = type === 'prev' ? y - 1 : y + 1;
                 _this.updateMonthView(y);
@@ -682,7 +689,7 @@
             // selected
             _this.$element.on('click', '['+ ITEM_DAY +']', function() {
                 var d = parseInt(this.innerHTML),
-                    cls = this.getAttribute('class'),
+                    cls = getClass(this),
                     type = /new|old/.test(cls) ? cls.match(/new|old/)[0] : '';
 
                 var day = _this.selectedDay(d, type);
@@ -723,7 +730,7 @@
                 .find('.calendar-inner, .view')
                 .css('width', w + 'px');
 
-            this.$element.find('.calendar-ct').height(h);
+            this.$element.find('.calendar-ct').width(w).height(h);
 
         },
         init: function () {

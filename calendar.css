@@ -29,6 +29,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    *overflow: hidden;
     -webkit-transition: .6s;
     transition: .6s;
 }
