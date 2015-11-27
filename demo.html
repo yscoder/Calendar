@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<title>Examples</title>
+<link rel="stylesheet" href="calendar.css">
+<style type="text/css">
+    html {
+        font: 500 14px 'Microsoft Yahei';
+        color: #333;
+    }
+    a {
+        text-decoration: none;
+    }
+    ul, ol, li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    #demo {
+        width: 300px;
+        margin: 30px auto;
+    }
+    p {
+        margin: 0;
+    }
+    #dt {
+        margin: 30px auto;
+        height: 28px;
+        width: 200px;
+        padding: 0 6px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+</style>
+</head>
+<body>
+    <div id="demo">
+        
+        <div id="ca"></div>
+
+        <input type="text" id="dt" placeholder="trigger calendar">
+        <div id="dd"></div>
+    </div>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="calendar.js"></script>
+<script>
+    $('#ca').calendar({
+        // view: 'month',
+        width: 320,
+        height: 320,
+        // startWeek: 0,
+        // selectedRang: [new Date(), null],
+        data: [
+            {
+                date: '2015/11/25',
+                value: '上班'
+            },
+            {
+                date: '2015/11/26',
+                value: '吃饭睡觉打豆豆'
+            }
+        ],
+        onSelected: function (view, date, data) {
+            console.log('view:' + view)
+            console.log('date:' + date)
+            console.log('data:' + (data || '无'));
+        }
+    });
+
+    $('#dd').calendar({
+        trigger: '#dt',
+        // offset: [0, 1],
+        zIndex: 999,
+        onSelected: function (view, date, data) {
+            console.log('event: onSelected')
+        },
+        onClose: function (view, date, data) {
+            console.log('event: onClose')
+            console.log('view:' + view)
+            console.log('date:' + date)
+            console.log('data:' + (data || '无'));
+        }
+    });
+</script>
+</body>
+</html>
