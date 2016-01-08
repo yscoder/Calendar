@@ -1,8 +1,8 @@
 /**
- * 
+ *
  * @authors yusen
- * @date    2015-12-29 17:47:02
- * @version 0.0.3
+ * @date    2016-01-08 11:17:59
+ * https://github.com/yscoder/Calendar
  */
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -26,7 +26,7 @@
             zIndex: 1,
 
             // selector or element
-            // 设置触发显示的元素，为null时默认显示 
+            // 设置触发显示的元素，为null时默认显示
             trigger: null,
 
             // 偏移位置，可设正负值
@@ -40,7 +40,7 @@
             // 可选：date, month
             view: 'date',
 
-            // 默认日期为当前日期  
+            // 默认日期为当前日期
             date: new Date(),
             format: 'yyyy/mm/dd',
 
@@ -72,11 +72,11 @@
             next: '&gt;',
 
             // 切换视图
-            // 参数：view, date
+            // 参数：view, y, m
             viewChange: $.noop,
 
             // view: 视图
-            // date: 不同视图返回不同的值 
+            // date: 不同视图返回不同的值
             // value: 日期关联数据
             onSelected: function(view, date, value) {
                 // body...
@@ -286,7 +286,6 @@
 
     Calendar.prototype = {
         constructor: Calendar,
-        version: '0.0.1',
         getDayAction: function(day) {
             var action = ITEM_DAY;
             if (this.selectedRang) {
@@ -365,14 +364,12 @@
                 month = Number(m);
             }
 
-
             firstWeek = new Date(year, month - 1, 1).getDay() || 7;
             prevDiff = firstWeek - this.options.startWeek;
             daysNum = Date.getDaysNum(year, month);
             prevM = Date.getPrevMonth(year, month);
             prevDaysNum = Date.getDaysNum(year, prevM.m);
             nextM = Date.getNextMonth(year, month);
-
             // month flag
             var PREV_FLAG = 1,
                 CURR_FLAG = 2,
@@ -473,11 +470,12 @@
                 Date.getNextMonth(y, m)
             ];
 
-            this.$dateItems.empty();
+            this.$dateItems.html('');
             for (var i = 0; i < 3; i++) {
                 var $item = this.getDaysHtml(ma[i].y, ma[i].m);
                 this.$dateItems.append($item);
             }
+
         },
         hide: function(view, date, data) {
             this.$trigger.val(date.format(this.options.format));
@@ -537,44 +535,44 @@
             m = m || this.date.getMonth() + 1;
 
             var _this = this,
-                $dis = this.$dateItems;
-            exec = {
-                prev: function() {
-                    var pm = Date.getPrevMonth(y, m),
-                        ppm = Date.getPrevMonth(y, m, 2),
-                        $prevItem = _this.getDaysHtml(ppm.y, ppm.m);
+                $dis = this.$dateItems,
+                exec = {
+                    prev: function() {
+                        var pm = Date.getPrevMonth(y, m),
+                            ppm = Date.getPrevMonth(y, m, 2),
+                            $prevItem = _this.getDaysHtml(ppm.y, ppm.m);
 
-                    m = pm.m;
-                    y = pm.y;
+                        m = pm.m;
+                        y = pm.y;
 
-                    $dis.animate({
-                        marginLeft: 0
-                    }, 300, 'swing', function() {
-                        $dis.children(':last').remove();
-                        $dis.prepend($prevItem).css('margin-left', '-100%');
+                        $dis.animate({
+                            marginLeft: 0
+                        }, 300, 'swing', function() {
+                            $dis.children(':last').remove();
+                            $dis.prepend($prevItem).css('margin-left', '-100%');
 
-                        $.isFunction(cb) && cb.call(_this);
-                    });
-                },
-                next: function() {
-                    var nm = Date.getNextMonth(y, m),
-                        nnm = Date.getNextMonth(y, m, 2),
-                        $nextItem = _this.getDaysHtml(nnm.y, nnm.m);
+                            $.isFunction(cb) && cb.call(_this);
+                        });
+                    },
+                    next: function() {
+                        var nm = Date.getNextMonth(y, m),
+                            nnm = Date.getNextMonth(y, m, 2),
+                            $nextItem = _this.getDaysHtml(nnm.y, nnm.m);
 
-                    m = nm.m;
-                    y = nm.y;
+                        m = nm.m;
+                        y = nm.y;
 
-                    $dis.animate({
-                        marginLeft: '-200%'
-                    }, 300, 'swing', function() {
-                        $dis.children(':first').remove();
-                        $dis.append($nextItem).css('margin-left', '-100%');
+                        $dis.animate({
+                            marginLeft: '-200%'
+                        }, 300, 'swing', function() {
+                            $dis.children(':first').remove();
+                            $dis.append($nextItem).css('margin-left', '-100%');
 
-                        $.isFunction(cb) && cb.call(_this);
-                    });
+                            $.isFunction(cb) && cb.call(_this);
+                        });
 
-                }
-            };
+                    }
+                };
 
 
             if (dirc) {
@@ -680,8 +678,10 @@
                     y = arr[0],
                     m = arr[1];
 
-                var d = _this.updateDateView(y, m, type);
-                vc('date', d.y, d.m);
+                var d = _this.updateDateView(y, m, type, function() {
+                    vc('date', d.y, d.m);
+                });
+
             }).on('click', ARROW_MONTH, function() {
 
                 var y = Number(_this.$disMonth.html()),
@@ -754,8 +754,7 @@
 
             if (this.view === 'date') {
                 var d = this.getDisDateValue();
-
-                this.updateDateView(d[0], d[1]);
+                this.fillDateItems(d[0], d[1]);
             } else if (this.view === 'month') {
                 this.updateMonthView(this.$disMonth.html());
             }
