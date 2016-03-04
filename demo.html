@@ -26,7 +26,7 @@
     p {
         margin: 0;
     }
-    #dt {
+    input {
         margin: 30px auto;
         height: 28px;
         width: 200px;
@@ -38,11 +38,12 @@
 </head>
 <body>
     <div id="demo">
-        
+
         <div id="ca"></div>
 
         <input type="text" id="dt" placeholder="trigger calendar">
         <div id="dd"></div>
+
     </div>
 <script src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="calendar.js"></script>
@@ -84,6 +85,7 @@
             console.log('data:' + (data || '无'));
         }
     });
+
 </script>
 </body>
 </html>

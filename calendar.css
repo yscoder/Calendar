@@ -2,6 +2,7 @@
     width: 280px;
     height: 330px;
 }
+
 .calendar-modal {
     display: none;
     position: absolute;
@@ -9,38 +10,43 @@
     border: 1px solid #e8e8e8;
     box-shadow: 1px 2px 3px #ddd
 }
+
 .calendar-inner {
     position: relative;
     z-index: 1;
     -webkit-perspective: 1000;
     -moz-perspective: 1000;
-    -ms-perspective: 1000;
     perspective: 1000;
-    -ms-transform: perspective(1000px);
-    -moz-transform: perspective(1000px);
-    -moz-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
+    -webkit-transform: perspective(1000px);
+    transform: perspective(1000px);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 .calendar-views {
+    -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
 .calendar .view {
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     position: absolute;
     top: 0;
     left: 0;
+    background: #fff;
     *overflow: hidden;
     -webkit-transition: .6s;
     transition: .6s;
 }
 .calendar-d .view-month,
 .calendar-m .view-date {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
     visibility: hidden;
     z-index: 1;
 }
 .calendar-d .view-date,
 .calendar-m .view-month {
+    -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
     visibility: visible;
     z-index: 2;
@@ -63,6 +69,9 @@
 .calendar-arrow,
 .calendar-arrow .next {
     float: right;
+}
+.calendar-ct {
+    height: 280px;
 }
 .calendar-hd {
     padding: 10px 0;
@@ -89,18 +98,20 @@
 }
 .calendar-display .m,
 .calendar-views .week,
-.calendar-views .days .old,
-.calendar-views .days .new,
 .calendar-display:hover,
 .calendar-arrow span:hover {
     color: #888;
+}
+.calendar-views .days .old,
+.calendar-views .days .new {
+    color: #ccc
 }
 
 .calendar-arrow span,
 .calendar-views .days li[data-calendar-day],
 .calendar-views .view-month li[data-calendar-month] {
     cursor: pointer;
-} 
+}
 .calendar li[disabled] {
     cursor: not-allowed;
 }
@@ -132,21 +143,21 @@
 }
 .calendar .days li[data-calendar-day]:hover,
 .calendar .view-month li[data-calendar-month]:hover {
-    background: #eee; 
+    background: #eee;
 }
 .calendar .calendar-views .now {
     color: #fff;
-    background: #66be8c!important;  
+    background: #66be8c!important;
 }
 .calendar .calendar-views .selected {
     color: #66be8c;
-    background: #CDE9D9!important; 
+    background: #CDE9D9!important;
 }
 .calendar .calendar-views .dot {
     position: absolute;
     left: 50%;
     bottom: 4px;
-    margin-left: -2px; 
+    margin-left: -2px;
     width: 4px;
     height: 4px;
     background: #66be8c;
