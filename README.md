@@ -1,5 +1,5 @@
 # Calendar
-A calendar component, based on jQuery.
+A calendar component, based on jQuery. [Demo](http://htmlpreview.github.io/?https://github.com/yscoder/Calendar/blob/master/demo.html)
 
 ---
 
