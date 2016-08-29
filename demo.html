@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="calendar.css">
 <style type="text/css">
     html {
-        font: 500 14px 'Microsoft Yahei';
+        font: 500 14px "Helvetica Neue",Helvetica,Arial,sans-serif;
         color: #333;
     }
     a {
@@ -48,33 +48,51 @@
 <script src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="calendar.js"></script>
 <script>
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+
+
+    var data = [
+        {
+            date: year + '-' + month + '-' + (date - 1),
+            value: 'hello'
+        },
+        {
+            date: year + '-' + month + '-' + date,
+            value: '上班'
+        },
+        {
+            date: new Date(year, month - 1, date + 1),
+            value: '吃饭睡觉打豆豆'
+        }
+    ];
+
+    // inline
     $('#ca').calendar({
         // view: 'month',
         width: 320,
         height: 320,
         // startWeek: 0,
         // selectedRang: [new Date(), null],
-        data: [
-            {
-                date: '2015/11/25',
-                value: '上班'
-            },
-            {
-                date: '2015/11/26',
-                value: '吃饭睡觉打豆豆'
-            }
-        ],
+        data: data,
         onSelected: function (view, date, data) {
             console.log('view:' + view)
             console.log('date:' + date)
             console.log('data:' + (data || '无'));
+        },
+        viewChange: function (view, y, m) {
+            console.log(view, y, m)
         }
     });
 
+    // picker
     $('#dd').calendar({
         trigger: '#dt',
         // offset: [0, 1],
         zIndex: 999,
+        data: data,
         onSelected: function (view, date, data) {
             console.log('event: onSelected')
         },

@@ -1,8 +1,8 @@
 /**
  *
  * @authors yusen
- * @date    2016-01-08 11:17:59
- * https://github.com/yscoder/Calendar
+ * @date    2016-08-29 09:42:30
+ * @github  https://github.com/yscoder/Calendar
  */
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -307,7 +307,7 @@
                 for (var i = 0, len = data.length; i < len; i++) {
                     var item = data[i];
 
-                    if (day.isSame(item.date.toDate())) {
+                    if (day.isSame(Date.tryParse(item.date))) {
                         ret = item.value;
                     }
                 }
@@ -482,20 +482,25 @@
             this.options.onClose.call(this, view, date, data);
             this.$element.hide();
         },
+        setPosition: function(){
+            var post = this.$trigger.offset();
+            var offs = this.options.offset;
+
+            this.$element.css({
+                left: (post.left + offs[0]) + 'px',
+                top: (post.top + this.$trigger.outerHeight() + offs[1]) + 'px'
+            })
+        },
         trigger: function() {
 
             this.$trigger = this.options.trigger instanceof $ ? this.options.trigger : $(this.options.trigger);
 
-            var _this = this,
-                $this = _this.$element,
-                post = _this.$trigger.offset(),
-                offs = _this.options.offset;
+            this.setPosition();
 
-            $this.addClass('calendar-modal').css({
-                left: (post.left + offs[0]) + 'px',
-                top: (post.top + _this.$trigger.outerHeight() + offs[1]) + 'px',
-                zIndex: _this.options.zIndex
-            });
+            var _this = this,
+                $this = _this.$element;
+
+            $this.addClass('calendar-modal').css('zIndex', _this.options.zIndex);
 
             _this.$trigger.click(function() {
                 $this.show();
@@ -505,6 +510,10 @@
                 if (_this.$trigger[0] != e.target && !$.contains($this[0], e.target)) {
                     $this.hide();
                 }
+            });
+
+            $(window).resize(function(){
+                _this.setPosition();
             });
         },
         render: function() {
@@ -643,7 +652,8 @@
 
             $lbl.css({
                 left: (event.pageX - w / 2) + 'px',
-                top: (event.pageY - h - 20) + 'px'
+                top: (event.pageY - h - 20) + 'px',
+                zIndex: this.options.zIndex + 1
             }).show();
         },
         hasLabel: function() {
@@ -718,8 +728,7 @@
                 var arr = _this.getDisDateValue(),
                     day = new Date(arr[0], arr[1] - 1, parseInt(this.innerHTML));
 
-                if (_this.hasLabel && $(this).data(MARK_DATA)) {
-                    $('body').append(_this.$label);
+                if (_this.hasLabel() && $(this).data(MARK_DATA)) {
                     _this.showLabel(e, 'date', day, $(this).data(MARK_DATA));
                 }
 

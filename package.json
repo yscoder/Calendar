@@ -1,0 +1,25 @@
+{
+  "name": "flip-calendar-picker",
+  "version": "1.0.0",
+  "description": "A calendar component, based on jQuery. ",
+  "main": "calendar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yscoder/Calendar.git"
+  },
+  "keywords": [
+    "jquery",
+    "calendar",
+    "picker",
+    "date"
+  ],
+  "author": "yusen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yscoder/Calendar/issues"
+  },
+  "homepage": "https://github.com/yscoder/Calendar#readme"
+}
