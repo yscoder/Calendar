@@ -118,7 +118,7 @@
 
         ITEM_STYLE = 'style="width:{w}px;height:{h}px;line-height:{h}px"',
         WEEK_ITEM_TPL = '<li ' + ITEM_STYLE + '>{wk}</li>',
-        DAY_ITEM_TPL = '<li ' + ITEM_STYLE + ' class="{class}" {action}>{value}</li>',
+        DAY_ITEM_TPL = '<li ' + ITEM_STYLE + ' class="{class}" {action}="{date}">{value}</li>',
         MONTH_ITEM_TPL = '<li ' + ITEM_STYLE + ' ' + ITEM_MONTH + '>{m}月</li>',
 
         TEMPLATE = [
@@ -339,6 +339,7 @@
                 data['class'] += ' ' + TODAY_CLASS;
             }
 
+            data.date = idt.format(this.options.format);
             data.action = this.getDayAction(idt);
             markData = this.getDayData(idt);
 
@@ -482,7 +483,7 @@
             this.options.onClose.call(this, view, date, data);
             this.$element.hide();
         },
-        setPosition: function(){
+        setPosition: function() {
             var post = this.$trigger.offset();
             var offs = this.options.offset;
 
@@ -512,7 +513,7 @@
                 }
             });
 
-            $(window).resize(function(){
+            $(window).resize(function() {
                 _this.setPosition();
             });
         },
@@ -725,14 +726,14 @@
 
             // hover
             _this.$element.on('mouseenter', '[' + ITEM_DAY + ']', function(e) {
-                var arr = _this.getDisDateValue(),
-                    day = new Date(arr[0], arr[1] - 1, parseInt(this.innerHTML));
+                var $this = $(this),
+                    day = $this.attr(ITEM_DAY).toDate();
 
-                if (_this.hasLabel() && $(this).data(MARK_DATA)) {
-                    _this.showLabel(e, 'date', day, $(this).data(MARK_DATA));
+                if (_this.hasLabel() && $this.data(MARK_DATA)) {
+                    _this.showLabel(e, 'date', day, $this.data(MARK_DATA));
                 }
 
-                _this.options.onMouseenter.call(this, 'date', day, $(this).data(MARK_DATA));
+                _this.options.onMouseenter.call(this, 'date', day, $this.data(MARK_DATA));
             }).on('mouseleave', '[' + ITEM_DAY + ']', function() {
                 _this.$label.hide();
             });
