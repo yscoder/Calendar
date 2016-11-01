@@ -184,10 +184,7 @@
             dot = this.replace(/\d/g, '').charAt(0),
             arr = this.split(dot);
 
-        dt.setFullYear(arr[0]);
-        dt.setMonth(arr[1] - 1);
-        dt.setDate(arr[2]);
-        return dt;
+        return new Date(parseInt(arr[0]), parseInt(arr[1]) - 1, parseInt(arr[2]));
     }
 
     Date.prototype.format = function(exp) {

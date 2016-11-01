@@ -1,6 +1,6 @@
 {
   "name": "flip-calendar-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A calendar component, based on jQuery. ",
   "main": "calendar.js",
   "scripts": {
