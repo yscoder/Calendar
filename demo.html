@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
     <title>Examples</title>
-    <link rel="stylesheet" href="calendar.css">
+    <link rel="stylesheet" href="src/calendar.css">
     <style type="text/css">
         html {
             font: 500 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
             color: #333;
+            height: 100%;
+        }
+        
+        body {
+            height: 100%;
+            margin: 0;
         }
         
         a {
@@ -26,7 +31,7 @@
         }
         
         #demo {
-            width: 300px;
+            width: 400px;
             margin: 30px auto;
         }
         
@@ -35,27 +40,28 @@
         }
         
         input {
-            margin: 30px auto;
+            margin: 10px 0;
             height: 28px;
             width: 200px;
             padding: 0 6px;
             border: 1px solid #ccc;
             outline: none;
         }
+
     </style>
 </head>
-
 <body>
     <div id="demo">
+        <h2>Inline calendar</h2>
+        <div id="one"></div>
 
-        <div id="ca"></div>
-
+        <h2>Trigger calendar</h2>
         <input type="text" id="dt" placeholder="trigger calendar">
-        <div id="dd"></div>
-
+        <div id="two"></div>
+        <p><button type="button" id="add">Add input</button></p>
     </div>
     <script src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="calendar.js"></script>
+    <script src="src/calendar.js"></script>
     <script>
         var now = new Date();
         var year = now.getFullYear();
@@ -78,7 +84,7 @@
         }];
 
         // inline
-        var $ca = $('#ca').calendar({
+        var $ca = $('#one').calendar({
             // view: 'month',
             width: 320,
             height: 320,
@@ -98,7 +104,7 @@
         });
 
         // picker
-        $('#dd').calendar({
+        $('#two').calendar({
             trigger: '#dt',
             // offset: [0, 1],
             zIndex: 999,
@@ -113,7 +119,16 @@
                 console.log('data:' + (data || '无'));
             }
         });
+
+        // Dynamic elements
+        var $demo = $('#demo');
+        var UID = 1;
+        $('#add').click(function() {
+            $demo.append('<input id="input-'+ UID +'"><div id="ca-'+ UID +'"></div>');
+            $('#ca-' + UID).calendar({
+                trigger: '#input-'+ UID++
+            })
+        })
     </script>
 </body>
-
 </html>
