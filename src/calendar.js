@@ -3,7 +3,7 @@
  * @date    2016-08-29 09:42:30
  * @github  https://github.com/yscoder/Calendar
  */
-(function (root, factory) {
+(function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         define('calendar', ['jquery'], factory);
     } else if (typeof exports === 'object') {
@@ -11,7 +11,7 @@
     } else {
         factory(root.jQuery);
     }
-} (this, function ($) {
+} (this, function($) {
 
     // default config
 
@@ -77,7 +77,7 @@
         // view: 视图
         // date: 不同视图返回不同的值
         // value: 日期关联数据
-        onSelected: function (view, date, value) {
+        onSelected: function(view, date, value) {
             // body...
         },
 
@@ -171,25 +171,22 @@
 
     // extension methods
 
-    String.prototype.repeat = function (data) {
-        return this.replace(/\{\w+\}/g, function (str) {
+    String.prototype.repeat = function(data) {
+        return this.replace(/\{\w+\}/g, function(str) {
             var prop = str.replace(/\{|\}/g, '');
             return data[prop] || '';
         });
     }
 
-    String.prototype.toDate = function () {
+    String.prototype.toDate = function() {
         var dt = new Date(),
             dot = this.replace(/\d/g, '').charAt(0),
             arr = this.split(dot);
 
-        dt.setFullYear(arr[0]);
-        dt.setMonth(arr[1] - 1);
-        dt.setDate(arr[2]);
-        return dt;
+        return new Date(parseInt(arr[0]), parseInt(arr[1]) - 1, parseInt(arr[2]));
     }
 
-    Date.prototype.format = function (exp) {
+    Date.prototype.format = function(exp) {
         var y = this.getFullYear(),
             m = this.getMonth() + 1,
             d = this.getDate();
@@ -197,7 +194,7 @@
         return exp.replace('yyyy', y).replace('mm', m).replace('dd', d);
     }
 
-    Date.prototype.isSame = function (y, m, d) {
+    Date.prototype.isSame = function(y, m, d) {
         if (isDate(y)) {
             var dt = y;
             y = dt.getFullYear();
@@ -207,15 +204,15 @@
         return this.getFullYear() === y && this.getMonth() + 1 === m && this.getDate() === d;
     }
 
-    Date.prototype.add = function (n) {
+    Date.prototype.add = function(n) {
         this.setDate(this.getDate() + n);
     }
 
-    Date.prototype.minus = function (n) {
+    Date.prototype.minus = function(n) {
         this.setDate(this.getDate() - n);
     }
 
-    Date.prototype.clearTime = function (n) {
+    Date.prototype.clearTime = function(n) {
         this.setHours(0);
         this.setSeconds(0);
         this.setMinutes(0);
@@ -223,11 +220,11 @@
         return this;
     }
 
-    Date.isLeap = function (y) {
+    Date.isLeap = function(y) {
         return (y % 100 !== 0 && y % 4 === 0) || (y % 400 === 0);
     }
 
-    Date.getDaysNum = function (y, m) {
+    Date.getDaysNum = function(y, m) {
         var num = 31;
 
         switch (m) {
@@ -244,7 +241,7 @@
         return num;
     }
 
-    Date.getSiblingsMonth = function (y, m, n) {
+    Date.getSiblingsMonth = function(y, m, n) {
         var d = new Date(y, m - 1);
         d.setMonth(m - 1 + n);
         return {
@@ -253,15 +250,15 @@
         };
     }
 
-    Date.getPrevMonth = function (y, m, n) {
+    Date.getPrevMonth = function(y, m, n) {
         return this.getSiblingsMonth(y, m, 0 - (n || 1));
     }
 
-    Date.getNextMonth = function (y, m, n) {
+    Date.getNextMonth = function(y, m, n) {
         return this.getSiblingsMonth(y, m, n || 1);
     }
 
-    Date.tryParse = function (obj) {
+    Date.tryParse = function(obj) {
         if (!obj) {
             return obj;
         }
@@ -285,7 +282,7 @@
 
     Calendar.prototype = {
         constructor: Calendar,
-        getDayAction: function (day) {
+        getDayAction: function(day) {
             var action = ITEM_DAY;
             if (this.selectedRang) {
                 var start = Date.tryParse(this.selectedRang[0]),
@@ -298,7 +295,7 @@
 
             return action;
         },
-        getDayData: function (day) {
+        getDayData: function(day) {
             var ret, data = this.data;
 
             if (data) {
@@ -314,7 +311,7 @@
 
             return ret;
         },
-        getDayItem: function (y, m, d, f) {
+        getDayItem: function(y, m, d, f) {
             var dt = this.date,
                 idt = new Date(y, m - 1, d),
                 data = {
@@ -351,7 +348,7 @@
 
             return $item;
         },
-        getDaysHtml: function (y, m) {
+        getDaysHtml: function(y, m) {
             var year, month, firstWeek, daysNum, prevM, prevDiff,
                 dt = this.date,
                 $days = $('<ol class="days"></ol>');
@@ -392,7 +389,7 @@
 
             return $('<li></li>').width(this.options.width).append($days);
         },
-        getWeekHtml: function () {
+        getWeekHtml: function() {
             var week = [],
                 weekArray = this.options.weekArray,
                 start = this.options.startWeek,
@@ -418,7 +415,7 @@
 
             return week.join('');
         },
-        getMonthHtml: function () {
+        getMonthHtml: function() {
             var month = [],
                 w = this.width / 4,
                 h = this.height / 4,
@@ -434,7 +431,7 @@
 
             return month.join('');
         },
-        setMonthAction: function (y) {
+        setMonthAction: function(y) {
             var m = this.date.getMonth() + 1;
 
             this.$monthItems.children().removeClass(TODAY_CLASS);
@@ -442,7 +439,7 @@
                 this.$monthItems.children().eq(m - 1).addClass(TODAY_CLASS);
             }
         },
-        fillStatic: function () {
+        fillStatic: function() {
             var staticData = {
                 prev: this.options.prev,
                 next: this.options.next,
@@ -452,16 +449,16 @@
 
             this.$element.html(TEMPLATE.join('').repeat(staticData));
         },
-        updateDisDate: function (y, m) {
+        updateDisDate: function(y, m) {
             this.$disDate.html(DATE_DIS_TPL.repeat({
                 year: y,
                 month: m
             }));
         },
-        updateDisMonth: function (y) {
+        updateDisMonth: function(y) {
             this.$disMonth.html(y);
         },
-        fillDateItems: function (y, m) {
+        fillDateItems: function(y, m) {
             var ma = [
                 Date.getPrevMonth(y, m), {
                     y: y,
@@ -477,12 +474,12 @@
             }
 
         },
-        hide: function (view, date, data) {
+        hide: function(view, date, data) {
             this.$trigger.val(date.format(this.options.format));
             this.options.onClose.call(this, view, date, data);
             this.$element.hide();
         },
-        setPosition: function () {
+        setPosition: function() {
             var post = this.$trigger.offset();
             var offs = this.options.offset;
 
@@ -491,7 +488,7 @@
                 top: (post.top + this.$trigger.outerHeight() + offs[1]) + 'px'
             })
         },
-        trigger: function () {
+        trigger: function() {
 
             this.$trigger = $(this.options.trigger);
 
@@ -500,21 +497,21 @@
 
             $this.addClass('calendar-modal').css('zIndex', _this.options.zIndex);
 
-            $(document).click(function (e) {
+            $(document).click(function(e) {
                 if (_this.$trigger[0] != e.target && !$.contains($this[0], e.target)) {
                     $this.hide();
                 }
-            }).on('click', this.options.trigger, function () {
+            }).on('click', this.options.trigger, function() {
                 this.$trigger = $(this);
                 _this.setPosition();
                 $this.show();
             })
 
-            $(window).resize(function () {
+            $(window).resize(function() {
                 _this.setPosition();
             });
         },
-        render: function () {
+        render: function() {
             this.$week = this.$element.find('.week');
             this.$dateItems = this.$element.find('.date-items');
             this.$monthItems = this.$element.find('.month-items');
@@ -533,18 +530,18 @@
             this.options.trigger && this.trigger();
 
         },
-        setView: function (view) {
+        setView: function(view) {
             this.$element.removeClass(VIEW_CLASS.date + ' ' + VIEW_CLASS.month)
                 .addClass(VIEW_CLASS[view]);
             this.view = view;
         },
-        updateDateView: function (y, m, dirc, cb) {
+        updateDateView: function(y, m, dirc, cb) {
             m = m || this.date.getMonth() + 1;
 
             var _this = this,
                 $dis = this.$dateItems,
                 exec = {
-                    prev: function () {
+                    prev: function() {
                         var pm = Date.getPrevMonth(y, m),
                             ppm = Date.getPrevMonth(y, m, 2),
                             $prevItem = _this.getDaysHtml(ppm.y, ppm.m);
@@ -554,14 +551,14 @@
 
                         $dis.animate({
                             marginLeft: 0
-                        }, 300, 'swing', function () {
+                        }, 300, 'swing', function() {
                             $dis.children(':last').remove();
                             $dis.prepend($prevItem).css('margin-left', '-100%');
 
                             $.isFunction(cb) && cb.call(_this);
                         });
                     },
-                    next: function () {
+                    next: function() {
                         var nm = Date.getNextMonth(y, m),
                             nnm = Date.getNextMonth(y, m, 2),
                             $nextItem = _this.getDaysHtml(nnm.y, nnm.m);
@@ -571,7 +568,7 @@
 
                         $dis.animate({
                             marginLeft: '-200%'
-                        }, 300, 'swing', function () {
+                        }, 300, 'swing', function() {
                             $dis.children(':first').remove();
                             $dis.append($nextItem).css('margin-left', '-100%');
 
@@ -597,27 +594,27 @@
                 m: m
             };
         },
-        updateMonthView: function (y) {
+        updateMonthView: function(y) {
             this.updateDisMonth(y);
             this.setMonthAction(y);
             this.setView('month');
         },
-        getDisDateValue: function () {
+        getDisDateValue: function() {
             var arr = this.$disDate.html().split('/'),
                 y = Number(arr[0]),
                 m = Number(arr[1].match(/\d{1,2}/)[0]);
 
             return [y, m];
         },
-        selectedDay: function (d, type) {
+        selectedDay: function(d, type) {
             var arr = this.getDisDateValue(),
                 y = arr[0],
                 m = arr[1],
-                toggleClass = function () {
+                toggleClass = function() {
                     this.$dateItems.children(':eq(1)')
                         .find('[' + ITEM_DAY + ']:not(.' + NEW_DAY_CLASS + ', .' + OLD_DAY_CLASS + ')')
                         .removeClass(SELECT_CLASS)
-                        .filter(function (index) {
+                        .filter(function(index) {
                             return parseInt(this.innerHTML) === d;
                         }).addClass(SELECT_CLASS);
                 };
@@ -636,7 +633,7 @@
 
             return new Date(y, m - 1, d);
         },
-        showLabel: function (event, view, date, data) {
+        showLabel: function(event, view, date, data) {
             var $lbl = this.$label;
 
             $lbl.find('p').html(this.options.label.repeat({
@@ -654,25 +651,25 @@
                 zIndex: this.options.zIndex + 1
             }).show();
         },
-        hasLabel: function () {
+        hasLabel: function() {
             if (this.options.label) {
                 $('body').append(this.$label);
                 return true;
             }
             return false;
         },
-        event: function () {
+        event: function() {
             var _this = this,
                 vc = _this.options.viewChange;
 
             // view change
-            _this.$element.on('click', DISPLAY_VD, function () {
+            _this.$element.on('click', DISPLAY_VD, function() {
                 var arr = _this.getDisDateValue();
                 _this.updateMonthView(arr[0], arr[1]);
 
                 vc('month', arr[0], arr[1]);
 
-            }).on('click', DISPLAY_VM, function () {
+            }).on('click', DISPLAY_VM, function() {
                 var y = this.innerHTML;
 
                 _this.updateDateView(y);
@@ -680,17 +677,17 @@
             });
 
             // arrow
-            _this.$element.on('click', ARROW_DATE, function () {
+            _this.$element.on('click', ARROW_DATE, function() {
                 var arr = _this.getDisDateValue(),
                     type = getClass(this),
                     y = arr[0],
                     m = arr[1];
 
-                var d = _this.updateDateView(y, m, type, function () {
+                var d = _this.updateDateView(y, m, type, function() {
                     vc('date', d.y, d.m);
                 });
 
-            }).on('click', ARROW_MONTH, function () {
+            }).on('click', ARROW_MONTH, function() {
 
                 var y = Number(_this.$disMonth.html()),
                     type = getClass(this);
@@ -701,7 +698,7 @@
             });
 
             // selected
-            _this.$element.on('click', '[' + ITEM_DAY + ']', function () {
+            _this.$element.on('click', '[' + ITEM_DAY + ']', function() {
                 var d = parseInt(this.innerHTML),
                     cls = getClass(this),
                     type = /new|old/.test(cls) ? cls.match(/new|old/)[0] : '';
@@ -712,7 +709,7 @@
 
                 _this.$trigger && _this.hide('date', day, $(this).data(MARK_DATA));
 
-            }).on('click', '[' + ITEM_MONTH + ']', function () {
+            }).on('click', '[' + ITEM_MONTH + ']', function() {
                 var y = Number(_this.$disMonth.html()),
                     m = parseInt(this.innerHTML);
 
@@ -722,7 +719,7 @@
             });
 
             // hover
-            _this.$element.on('mouseenter', '[' + ITEM_DAY + ']', function (e) {
+            _this.$element.on('mouseenter', '[' + ITEM_DAY + ']', function(e) {
                 var $this = $(this),
                     day = $this.attr(ITEM_DAY).toDate();
 
@@ -731,11 +728,11 @@
                 }
 
                 _this.options.onMouseenter.call(this, 'date', day, $this.data(MARK_DATA));
-            }).on('mouseleave', '[' + ITEM_DAY + ']', function () {
+            }).on('mouseleave', '[' + ITEM_DAY + ']', function() {
                 _this.$label.hide();
             });
         },
-        resize: function () {
+        resize: function() {
             var w = this.width,
                 h = this.height,
                 hdH = this.$element.find('.calendar-hd').outerHeight();
@@ -747,7 +744,7 @@
             this.$element.find('.calendar-ct').width(w).height(h);
 
         },
-        init: function () {
+        init: function() {
 
             this.fillStatic();
             this.resize();
@@ -756,7 +753,7 @@
             this.setView(this.view);
             this.event();
         },
-        setData: function (data) {
+        setData: function(data) {
             this.data = data;
 
             if (this.view === 'date') {
@@ -766,20 +763,20 @@
                 this.updateMonthView(this.$disMonth.html());
             }
         },
-        methods: function (name, args) {
+        methods: function(name, args) {
             if (OS.call(this[name]) === '[object Function]') {
                 return this[name].apply(this, args);
             }
         }
     };
 
-    $.fn.calendar = function (options) {
+    $.fn.calendar = function(options) {
         var calendar = this.data('calendar'),
             fn,
             args = [].slice.call(arguments);
 
         if (!calendar) {
-            return this.each(function () {
+            return this.each(function() {
                 return $(this).data('calendar', new Calendar(this, options));
             });
         }
