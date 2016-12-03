@@ -25,8 +25,8 @@ or
 <input type="text" id="in">
 <div id="ca"></div>
 
-$('#in').calendar({
-  trigger: '#ca'
+$('#ca').calendar({
+  trigger: '#in'
   // options
 });
 ```
