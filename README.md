@@ -1,5 +1,5 @@
 # Calendar
-A calendar component, based on jQuery. [Demo](http://yscoder.github.io/Calendar/demo.html)
+A calendar component, based on jQuery. [Demo](//yscoder.github.io/Calendar/index.html)
 
 ---
 
@@ -33,74 +33,77 @@ $('#ca').calendar({
 
 ## Options
 
-* **width: 280**
+```js
+{
 
-    calendar width
-* **height: 280**
+    // width
+    width: 280,
 
-    calendar height
-* **zIndex: 1**
+    // height, 
+    height: 280,
 
-    calendar zIndex
-* **trigger: null**
+    // zIndex
+    zIndex: 1,
 
-    Set the trigger selector，
-* **offset: [0, 1]**
+    // set the trigger selector
+    trigger: null,
 
-    offset position
-* **customClass: ''**
+    // offset position
+    offset: [0, 1],
 
-    override class
-* **view: 'date'**
+    // override class
+    customClass: '',
 
-    set display view, optional date or month
-* **date: new Date()**
+    // set display view, optional date or month
+    view: 'date',
 
-    set today
-* **format: 'yyyy/mm/dd'**
+    // set current date
+    date: new Date(),
 
-    date format
-* **startWeek: 0**
+    // date format
+    format: 'yyyy/mm/dd',
 
-    default 0, first day of the week
-* **weekArray: ['日', '一', '二', '三', '四', '五', '六']**
+    // first day of the week
+    startWeek: 0,
 
-    can change to other
-* **selectedRang: null**
+    // week format
+    weekArray: ['日', '一', '二', '三', '四', '五', '六'],
 
-    The optional time range.
+    // month format
+    monthArray: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
 
-    format: [ start date, end date]
+    // optional date range
+    // value: `[ start date[, end date] ]`
+    // Fixed date range: [new Date(2016, 0, 1), new Date(2016, 11, 31)] or ['2016/1/1', '2016/12/1']
+    // Starting today: [new Date(), null] or [new Date()]
+    selectedRang: null,
 
-    set today do not choose before: [new Date(), null] or ['2015/11/27']
-* **data: null**
+    // display data when mouse enter 
+    // value: `[{ date: String || Date, value: object }, ... ]`
+    // example: [ { date: '2016/1/1', value: 'A new Year'} ] or [ { date: new Date(), value: 'What to do'} ]
+    data: null,
 
-    Date of linked data.
+    // data label format
+    // No display is set to `false`
+    label: '{d}\n{v}',
 
-    [{ date: string, value: object }, ... ]
+    // arrow characters
+    prev: '&lt;',
+    next: '&gt;',
 
-* **label: '{d}\n{v}'**
+    // callback function when view changed
+    // params: view, y, m
+    viewChange: $.noop,
 
-    data show format, set false don't show.
+    // callback function when selected
+    onSelected: function (view, date, value) {
+        // body...
+    },
 
-    parameters: {d} date, {m} view, {v}, data
-* **prev: '&lt;'**
-* **next: '&gt;'**
+    // callback function when mouseenter
+    onMouseenter: $.noop,
 
-    arrow characters
-* **viewChange: $.noop**
-
-    event callback for view change.
-
-    parameters: view
-* **onSelected: $.noop**
-
-    event callback for selected.
-
-    parameters: view, date, data
-* **onMouseenter: $.noop**
-* **onClose: $.noop**
-
-    event callback for selected.
-    parameters as above.
-
+    // callback function when closed
+    onClose: $.noop
+}
+```

@@ -26,9 +26,8 @@ gulp.task('dev', () => {
     browserSync.init({
         server: {
             baseDir: './'
-        },
-        startPath: 'demo.html'
+        }
     })
 
-    gulp.watch(['demo.html', src + '*.*'], browserSync.reload)
+    gulp.watch(['index.html', src + '*.*'], browserSync.reload)
 })

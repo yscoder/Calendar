@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
-    <title>Examples</title>
+    <title>Calendar demo</title>
     <link rel="stylesheet" href="src/calendar.css">
     <style type="text/css">
         html {
@@ -60,7 +60,7 @@
         <div id="two"></div>
         <p><button type="button" id="add">Add input</button></p>
     </div>
-    <script src="http://apps.bdimg.com/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
     <script src="src/calendar.js"></script>
     <script>
         var now = new Date();
@@ -92,12 +92,12 @@
             // selectedRang: [new Date(), null],
             data: data,
             date: new Date(2016, 9, 31),
-            onSelected: function(view, date, data) {
+            onSelected: function (view, date, data) {
                 console.log('view:' + view)
                 console.log('date:' + date)
                 console.log('data:' + (data || '无'));
             },
-            viewChange: function(view, y, m) {
+            viewChange: function (view, y, m) {
                 console.log(view, y, m)
 
             }
@@ -109,10 +109,10 @@
             // offset: [0, 1],
             zIndex: 999,
             data: data,
-            onSelected: function(view, date, data) {
+            onSelected: function (view, date, data) {
                 console.log('event: onSelected')
             },
-            onClose: function(view, date, data) {
+            onClose: function (view, date, data) {
                 console.log('event: onClose')
                 console.log('view:' + view)
                 console.log('date:' + date)
@@ -123,10 +123,10 @@
         // Dynamic elements
         var $demo = $('#demo');
         var UID = 1;
-        $('#add').click(function() {
-            $demo.append('<input id="input-'+ UID +'"><div id="ca-'+ UID +'"></div>');
+        $('#add').click(function () {
+            $demo.append('<input id="input-' + UID + '"><div id="ca-' + UID + '"></div>');
             $('#ca-' + UID).calendar({
-                trigger: '#input-'+ UID++
+                trigger: '#input-' + UID++
             })
         })
     </script>
