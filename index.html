@@ -12,16 +12,16 @@
             color: #333;
             height: 100%;
         }
-        
+
         body {
             height: 100%;
             margin: 0;
         }
-        
+
         a {
             text-decoration: none;
         }
-        
+
         ul,
         ol,
         li {
@@ -29,16 +29,16 @@
             padding: 0;
             margin: 0;
         }
-        
+
         #demo {
             width: 400px;
             margin: 30px auto;
         }
-        
+
         p {
             margin: 0;
         }
-        
+
         input {
             margin: 10px 0;
             height: 28px;
@@ -91,6 +91,7 @@
             // startWeek: 0,
             // selectedRang: [new Date(), null],
             data: data,
+            monthArray: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             date: new Date(2016, 9, 31),
             onSelected: function (view, date, data) {
                 console.log('view:' + view)

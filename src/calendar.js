@@ -715,7 +715,7 @@
 
             }).on('click', '[' + ITEM_MONTH + ']', function () {
                 var y = Number(_this.$disMonth.html()),
-                    m = parseInt(this.innerHTML);
+                    m = $(this).index() + 1;
 
                 _this.updateDateView(y, m);
                 vc('date', y, m);
