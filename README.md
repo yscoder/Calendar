@@ -77,7 +77,12 @@ $('#ca').calendar({
     // Fixed date range: [new Date(2016, 0, 1), new Date(2016, 11, 31)] or ['2016/1/1', '2016/12/1']
     // Starting today: [new Date(), null] or [new Date()]
     selectedRang: null,
-
+    
+    // 휴일 관리 Array 
+    // value : [ days ....]
+    // 예시 ['2017/02/17','2017/02/18']
+    holidays: null,
+        
     // display data when mouse enter 
     // value: `[{ date: String || Date, value: object }, ... ]`
     // example: [ { date: '2016/1/1', value: 'A new Year'} ] or [ { date: new Date(), value: 'What to do'} ]

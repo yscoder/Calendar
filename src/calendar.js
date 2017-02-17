@@ -59,6 +59,8 @@
         // 如设置2015年11月23日以前不可选：[new Date(), null] or ['2015/11/23']
         selectedRang: null,
 
+        holidays:null,
+
         // 日期关联数据 [{ date: string, value: object }, ... ]
         // 日期格式与 format 一致
         // 如 [ {date: '2015/11/23', value: '面试'} ]
@@ -279,6 +281,7 @@
         this.height = this.options.height;
         this.date = this.options.date;
         this.selectedRang = this.options.selectedRang;
+        this.holidays =  this.options.holidays;
         this.data = this.options.data;
         this.init();
     }
@@ -294,6 +297,16 @@
                 if ((start && day < start.clearTime()) || (end && day > end.clearTime())) {
                     action = DISABLED;
                 }
+            }
+
+            if(this.holidays) {
+
+                this.holidays.forEach(function (v,i) {
+                    if(day.getTime() == Date.tryParse(v).getTime()) {
+                        console.log(v);
+                        action = DISABLED;
+                    }
+                });
             }
 
             return action;
