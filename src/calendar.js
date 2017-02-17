@@ -175,12 +175,19 @@
     }
 
     // extension methods
-
     String.prototype.repeat = function (data) {
         return this.replace(/\{\w+\}/g, function (str) {
             var prop = str.replace(/\{|\}/g, '');
             return data[prop] || '';
         });
+    }
+    
+    String.prototype.lpad = function (padLength, padString) {
+        var str =  this;
+        while(str.length < padLength) {
+            str = padString + str;
+        }
+        return str; 
     }
 
     String.prototype.toDate = function () {
@@ -193,10 +200,12 @@
 
     Date.prototype.format = function (exp) {
         var y = this.getFullYear(),
-            m = this.getMonth() + 1,
+            m = ''+(this.getMonth() + 1),
             d = this.getDate();
-
-        return exp.replace('yyyy', y).replace('mm', m).replace('dd', d);
+        
+        m= m.lpad(2,0);
+        
+        return exp.replace('yyyy', y).replace('MM', m).replace('dd', d);
     }
 
     Date.prototype.isSame = function (y, m, d) {
@@ -723,6 +732,7 @@
                 var day = _this.selectedDay(d, type);
 
                 _this.options.onSelected.call(this, 'date', day, $(this).data(MARK_DATA));
+                console.log('selected1');
 
                 _this.$trigger && _this.hide('date', day, $(this).data(MARK_DATA));
 
@@ -733,6 +743,7 @@
                 _this.updateDateView(y, m);
                 vc('date', y, m);
                 _this.options.onSelected.call(this, 'month', new Date(y, m - 1));
+                console.log('selected2');
             });
 
             // hover
