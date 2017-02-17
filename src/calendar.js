@@ -648,7 +648,7 @@
                 toggleClass.call(this);
             }
 
-            return new Date(y, m - 1, d);
+            return new Date(y, m - 1, d).format(this.options.format);
         },
         showLabel: function (event, view, date, data) {
             var $lbl = this.$label;
