@@ -59,6 +59,8 @@
         // 如设置2015年11月23日以前不可选：[new Date(), null] or ['2015/11/23']
         selectedRang: null,
 
+        holidays:null,
+
         // 日期关联数据 [{ date: string, value: object }, ... ]
         // 日期格式与 format 一致
         // 如 [ {date: '2015/11/23', value: '面试'} ]
@@ -173,12 +175,19 @@
     }
 
     // extension methods
-
     String.prototype.repeat = function (data) {
         return this.replace(/\{\w+\}/g, function (str) {
             var prop = str.replace(/\{|\}/g, '');
             return data[prop] || '';
         });
+    }
+    
+    String.prototype.lpad = function (padLength, padString) {
+        var str =  this;
+        while(str.length < padLength) {
+            str = padString + str;
+        }
+        return str; 
     }
 
     String.prototype.toDate = function () {
@@ -191,10 +200,12 @@
 
     Date.prototype.format = function (exp) {
         var y = this.getFullYear(),
-            m = this.getMonth() + 1,
+            m = ''+(this.getMonth() + 1),
             d = this.getDate();
-
-        return exp.replace('yyyy', y).replace('mm', m).replace('dd', d);
+        
+        m= m.lpad(2,0);
+        
+        return exp.replace('yyyy', y).replace('MM', m).replace('dd', d);
     }
 
     Date.prototype.isSame = function (y, m, d) {
@@ -279,6 +290,7 @@
         this.height = this.options.height;
         this.date = this.options.date;
         this.selectedRang = this.options.selectedRang;
+        this.holidays =  this.options.holidays;
         this.data = this.options.data;
         this.init();
     }
@@ -294,6 +306,16 @@
                 if ((start && day < start.clearTime()) || (end && day > end.clearTime())) {
                     action = DISABLED;
                 }
+            }
+
+            if(this.holidays) {
+
+                this.holidays.forEach(function (v,i) {
+                    if(day.getTime() == Date.tryParse(v).getTime()) {
+                        console.log(v);
+                        action = DISABLED;
+                    }
+                });
             }
 
             return action;
@@ -635,7 +657,7 @@
                 toggleClass.call(this);
             }
 
-            return new Date(y, m - 1, d);
+            return new Date(y, m - 1, d).format(this.options.format);
         },
         showLabel: function (event, view, date, data) {
             var $lbl = this.$label;
@@ -710,6 +732,7 @@
                 var day = _this.selectedDay(d, type);
 
                 _this.options.onSelected.call(this, 'date', day, $(this).data(MARK_DATA));
+                console.log('selected1');
 
                 _this.$trigger && _this.hide('date', day, $(this).data(MARK_DATA));
 
@@ -720,6 +743,7 @@
                 _this.updateDateView(y, m);
                 vc('date', y, m);
                 _this.options.onSelected.call(this, 'month', new Date(y, m - 1));
+                console.log('selected2');
             });
 
             // hover

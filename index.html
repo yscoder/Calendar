@@ -91,8 +91,9 @@
             // startWeek: 0,
             // selectedRang: [new Date(), null],
             data: data,
+            holidays : ['2017/02/18','2017/02/19'],
             monthArray: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            date: new Date(2016, 9, 31),
+            //date: new Date(2016, 9, 31),
             onSelected: function (view, date, data) {
                 console.log('view:' + view)
                 console.log('date:' + date)
@@ -100,7 +101,6 @@
             },
             viewChange: function (view, y, m) {
                 console.log(view, y, m)
-
             }
         });
 
