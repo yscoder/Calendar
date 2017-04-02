@@ -11,7 +11,7 @@
     } else {
         factory(root.jQuery);
     }
-} (this, function ($) {
+}(this, function ($) {
 
     // default config
 
@@ -766,6 +766,11 @@
             } else if (this.view === 'month') {
                 this.updateMonthView(this.$disMonth.html());
             }
+        },
+        setDate: function (date) {
+            var dateObj = Date.tryParse(date);
+            this.updateDateView(dateObj.getFullYear(), dateObj.getMonth() + 1);
+            this.selectedDay(dateObj.getDate());
         },
         methods: function (name, args) {
             if (OS.call(this[name]) === '[object Function]') {

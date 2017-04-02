@@ -13,22 +13,27 @@ A calendar component, based on jQuery. [Demo](//yscoder.github.io/Calendar/index
 
 ## Use
 
-```
+```html
 <div id="ca"></div>
 
+<script>
 $('#ca').calendar({
   // options
 });
+</script>
 ```
+
 or
-```
+
+```html
 <input type="text" id="in">
 <div id="ca"></div>
-
+<script>
 $('#ca').calendar({
   trigger: '#in'
   // options
 });
+</script>
 ```
 
 ## Options
@@ -78,7 +83,7 @@ $('#ca').calendar({
     // Starting today: [new Date(), null] or [new Date()]
     selectedRang: null,
 
-    // display data when mouse enter 
+    // display data when mouse hover
     // value: `[{ date: String || Date, value: object }, ... ]`
     // example: [ { date: '2016/1/1', value: 'A new Year'} ] or [ { date: new Date(), value: 'What to do'} ]
     data: null,
@@ -107,3 +112,12 @@ $('#ca').calendar({
     onClose: $.noop
 }
 ```
+
+# Methods
+
+```js
+$element.calendar(method, value)
+```
+
+* `setDate`：Setting selected date.
+* `setData`：Setting hover data.
