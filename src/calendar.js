@@ -361,7 +361,11 @@
                 month = y.getMonth() + 1;
             } else {
                 year = Number(y);
-                month = Number(m);
+                if (screen.width <= 375) {
+                    month = Number(m) + 1;
+                } else {
+                    month = Number(m);
+                }
             }
 
             firstWeek = new Date(year, month - 1, 1).getDay() || 7;
