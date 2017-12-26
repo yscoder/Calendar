@@ -40,12 +40,6 @@
             return '';
         },
 
-        
-        // 自定義每一天的class
-        dayClass: function(date) {
-            return '';
-        },
-
         // 显示视图
         // 可选：date, month
         view: 'date',
