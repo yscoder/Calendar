@@ -48,6 +48,10 @@
             outline: none;
         }
 
+        .weekend {
+            color: #f00;
+        }
+
     </style>
 </head>
 <body>
@@ -83,11 +87,21 @@
             value: '2016-10-31'
         }];
 
+        var dayClass = function(date) {
+            if (date.getDay() === 0) {
+                return 'weekend';
+            } else if (date.getDay() === 6) {
+                return 'weekend';
+            }
+            return '';
+        };
+
         // inline
         var $ca = $('#one').calendar({
             // view: 'month',
             width: 320,
             height: 320,
+            dayClass: dayClass,
             // startWeek: 0,
             // selectedRang: [new Date(), null],
             data: data,

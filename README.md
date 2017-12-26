@@ -59,6 +59,11 @@ $('#ca').calendar({
     // override class
     customClass: '',
 
+    // callback to add additional class for every DayItem
+    dayClass: function(date) {
+        return '';
+    },
+
     // set display view, optional date or month
     view: 'date',
 
