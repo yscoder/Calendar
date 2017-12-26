@@ -34,6 +34,11 @@
 
         // 自定义类，用于重写样式
         customClass: '',
+        
+        // 自定義每一天的class
+        dayClass: function(date) {
+            return '';
+        },
 
         // 显示视图
         // 可选：date, month
@@ -275,6 +280,7 @@
         this.$element = $(element);
         this.options = $.extend({}, $.fn.calendar.defaults, options);
         this.$element.addClass('calendar ' + this.options.customClass);
+        this.dayClass = this.options.dayClass;
         this.width = this.options.width;
         this.height = this.options.height;
         this.date = this.options.date;
@@ -337,6 +343,8 @@
             if (dt.isSame(y, m, d)) {
                 data['class'] += ' ' + TODAY_CLASS;
             }
+            
+            data['class'] += this.dayClass(idt);
 
             data.date = idt.format(this.options.format);
             data.action = this.getDayAction(idt);
